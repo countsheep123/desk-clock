@@ -6,8 +6,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue")
+    name: "Time",
+    component: () => import(/* webpackChunkName: "time" */ "../views/Time.vue")
   },
   {
     path: "/calendar",
