@@ -1,24 +1,3 @@
-# desk-clock
+# [desk-clock](https://countsheep123.github.io/desk-clock/)
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![github pages](https://github.com/countsheep123/desk-clock/workflows/github%20pages/badge.svg)
