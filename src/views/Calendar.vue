@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Calendar />
+    <Calendar :dark-mode="isDark" />
   </div>
 </template>
 
@@ -11,6 +11,11 @@ import Calendar from "@/components/Calendar.vue";
 export default {
   components: {
     Calendar
+  },
+  computed: {
+    isDark: function() {
+      return this.$store.state.isDark;
+    }
   }
 };
 </script>

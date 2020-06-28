@@ -10,7 +10,56 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      darkModeMediaQuery: window.matchMedia("(prefers-color-scheme: dark)")
+    };
+  },
+  created() {
+    this.darkMode(this.darkModeMediaQuery);
+    this.darkModeMediaQuery.addListener(this.darkMode);
+  },
+  beforeDestroy() {
+    this.darkModeMediaQuery.removeListener(this.darkMode);
+  },
+  methods: {
+    darkMode: function(e) {
+      const isDark = e.matches;
+      if (isDark) {
+        // Dark
+        document.body.classList.remove("light-theme");
+        document.body.classList.add("dark-theme");
+      } else {
+        // Light
+        document.body.classList.remove("dark-theme");
+        document.body.classList.add("light-theme");
+      }
+      this.$store.commit("changeDarkMode", isDark);
+    }
+  }
+};
+</script>
+
 <style>
+:root {
+  --main-text: #333;
+  --main-bg: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-text: #ddd;
+    --main-bg: #000;
+  }
+}
+
+body {
+  color: var(--main-text);
+  background-color: var(--main-bg);
+  transition: 0.5s;
+}
+
 html,
 body {
   height: 100%;
@@ -21,7 +70,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   width: 100%;
   height: 100%;
 

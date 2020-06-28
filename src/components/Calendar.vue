@@ -1,6 +1,6 @@
 <template>
   <div class="component">
-    <v-calendar :attributes="attrs"></v-calendar>
+    <v-calendar :attributes="attrs" :is-dark="isDark"></v-calendar>
   </div>
 </template>
 
@@ -8,8 +8,12 @@
 import axios from "axios";
 
 export default {
+  props: {
+    darkMode: Boolean
+  },
   data() {
     return {
+      isDark: this.darkMode,
       attrs: [
         {
           key: "today",
@@ -21,6 +25,14 @@ export default {
   },
   created: function() {
     this.fetch();
+  },
+  watch: {
+    darkMode: {
+      handler(newVal) {
+        this.isDark = newVal;
+      },
+      immediate: true
+    }
   },
   methods: {
     fetch: function() {
