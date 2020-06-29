@@ -114,6 +114,7 @@ export default {
             temp_max: response.data.main.temp_max,
             humidity: response.data.main.humidity,
             pressure: response.data.main.pressure,
+            updated_at: response.data.dt,
             weather: response.data.weather[0].description,
             icon_url:
               "http://openweathermap.org/img/wn/" +
@@ -130,6 +131,9 @@ export default {
           });
 
           console.log(me.weather);
+        })
+        .catch(error => {
+          console.log(error);
         });
     },
     getCurrentPosition: function() {
