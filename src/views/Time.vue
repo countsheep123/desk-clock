@@ -2,18 +2,20 @@
   <div class="content">
     <TimeDate />
     <Weather :lang="lang" />
+    <IndoorEnvironment />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import TimeDate from "@/components/TimeDate.vue";
 import Weather from "@/components/Weather.vue";
+import IndoorEnvironment from "@/components/IndoorEnvironment.vue";
 
 export default {
   components: {
     TimeDate,
-    Weather
+    Weather,
+    IndoorEnvironment
   },
   computed: {
     lang: function() {
