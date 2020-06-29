@@ -18,14 +18,15 @@ export default {
     };
   },
   created() {
-    this.darkMode(this.darkModeMediaQuery);
-    this.darkModeMediaQuery.addListener(this.darkMode);
+    this.setDarkMode(this.darkModeMediaQuery);
+    this.darkModeMediaQuery.addListener(this.setDarkMode);
+    this.getLang();
   },
   beforeDestroy() {
-    this.darkModeMediaQuery.removeListener(this.darkMode);
+    this.darkModeMediaQuery.removeListener(this.setDarkMode);
   },
   methods: {
-    darkMode: function(e) {
+    setDarkMode: function(e) {
       const isDark = e.matches;
       if (isDark) {
         // Dark
@@ -36,7 +37,15 @@ export default {
         document.body.classList.remove("dark-theme");
         document.body.classList.add("light-theme");
       }
-      this.$store.commit("changeDarkMode", isDark);
+      this.$store.commit("setDarkMode", isDark);
+    },
+    getLang: function() {
+      const lang =
+        (window.navigator.languages && window.navigator.languages[0]) ||
+        window.navigator.language ||
+        window.navigator.userLanguage ||
+        window.navigator.browserLanguage;
+      this.$store.commit("setLang", lang);
     }
   }
 };

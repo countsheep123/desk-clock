@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <TimeDate />
-    <Weather />
+    <Weather :lang="lang" />
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   components: {
     TimeDate,
     Weather
+  },
+  computed: {
+    lang: function() {
+      return this.$store.state.lang;
+    }
   }
 };
 </script>

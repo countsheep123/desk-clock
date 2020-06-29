@@ -18,9 +18,11 @@
 import axios from "axios";
 
 export default {
+  props: {
+    lang: String
+  },
   data() {
     return {
-      lang: "",
       apikey: "",
       apikeyApplied: false,
       refreshInterval: 1000 * 60 * 60, // 1 hour
@@ -33,7 +35,6 @@ export default {
     };
   },
   created: function() {
-    this.getLang();
     this.isApikeyApplied();
     this.getCurrentPosition();
     this.timerId = setInterval(this.fetch, this.refreshInterval);
@@ -47,14 +48,6 @@ export default {
     }
   },
   methods: {
-    getLang: function() {
-      this.lang =
-        (window.navigator.languages && window.navigator.languages[0]) ||
-        window.navigator.language ||
-        window.navigator.userLanguage ||
-        window.navigator.browserLanguage;
-      console.log(this.lang);
-    },
     isApikeyApplied: function() {
       var apikey = this.$route.query.apikey;
 

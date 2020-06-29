@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isDark: false
+    isDark: false,
+    lang: ""
   },
   mutations: {
-    changeDarkMode(state, current) {
+    setDarkMode(state, current) {
       state.isDark = current;
+    },
+    setLang(state, lang) {
+      state.lang = lang;
     }
   },
   actions: {},
