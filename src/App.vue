@@ -3,7 +3,8 @@
     <div id="main">
       <div id="nav">
         <router-link to="/">Time</router-link> |
-        <router-link to="/calendar">Calendar</router-link>
+        <router-link to="/calendar">Calendar</router-link> |
+        <router-link to="/config">Config</router-link>
       </div>
       <router-view />
     </div>

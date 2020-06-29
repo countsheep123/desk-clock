@@ -1,15 +1,9 @@
 <template>
   <div class="component">
-    <div v-if="apikeyApplied">
-      <div class="weather" v-if="weather">
-        <span>{{ weather.weather }}</span>
-        <span><img :src="weather.icon_url"/></span>
-        <span> / {{ weather.temp }}℃</span>
-      </div>
-    </div>
-    <div v-else>
-      <input v-model="apikey" placeholder="Enter your OpenWeather apikey" />
-      <button v-on:click="applyApikey">Apply</button>
+    <div class="weather" v-if="weather">
+      <span>{{ weather.weather }}</span>
+      <span><img :src="weather.icon_url"/></span>
+      <span> / {{ weather.temp }}℃</span>
     </div>
   </div>
 </template>
@@ -24,7 +18,6 @@ export default {
   data() {
     return {
       apikey: "",
-      apikeyApplied: false,
       refreshInterval: 1000 * 60 * 60, // 1 hour
       timerId: "",
       location: {
@@ -35,42 +28,19 @@ export default {
     };
   },
   created: function() {
-    this.isApikeyApplied();
+    this.apikey = this.$store.state.config["open_weather"];
     this.getCurrentPosition();
     this.timerId = setInterval(this.fetch, this.refreshInterval);
   },
   watch: {
     location: function(val) {
       console.log(val);
-      if (this.apikeyApplied) {
+      if (this.apikey) {
         this.fetch();
       }
     }
   },
   methods: {
-    isApikeyApplied: function() {
-      var apikey = this.$route.query.apikey;
-
-      if (typeof apikey === "undefined" || apikey == null) {
-        this.apikeyApplied = false;
-        return;
-      }
-      if (apikey.length > 0) {
-        this.apikey = apikey;
-        this.apikeyApplied = true;
-      } else {
-        this.apikeyApplied = false;
-      }
-      return;
-    },
-    applyApikey: function() {
-      this.$router.push({
-        path: this.$route.path,
-        query: { apikey: this.apikey }
-      });
-      this.isApikeyApplied();
-      this.fetch();
-    },
     fetch: function() {
       console.log("apikey: " + this.apikey);
       if (
@@ -190,8 +160,5 @@ export default {
   font-size: 4vmax;
   font-family: "Monaco";
   font-weight: bold;
-}
-input {
-  width: 16rem;
 }
 </style>

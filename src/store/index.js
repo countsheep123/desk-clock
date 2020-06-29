@@ -1,12 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     isDark: false,
-    lang: ""
+    lang: "",
+    config: {}
   },
   mutations: {
     setDarkMode(state, current) {
@@ -14,6 +17,9 @@ export default new Vuex.Store({
     },
     setLang(state, lang) {
       state.lang = lang;
+    },
+    setConfig(state, config) {
+      state.config = config;
     }
   },
   actions: {},
