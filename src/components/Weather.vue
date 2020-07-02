@@ -33,8 +33,7 @@ export default {
     this.timerId = setInterval(this.fetch, this.refreshInterval);
   },
   watch: {
-    location: function(val) {
-      console.log(val);
+    location: function() {
       if (this.apikey) {
         this.fetch();
       }
@@ -94,6 +93,8 @@ export default {
           };
           response.data.weather.forEach(element => {
             me.weather.weathers.push({
+              id: element.id,
+              name: element.main,
               description: element.description,
               iconUrl:
                 "http://openweathermap.org/img/wn/" + element.icon + ".png"

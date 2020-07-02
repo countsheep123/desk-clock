@@ -45,7 +45,6 @@ export default {
         })
         .then(response => {
           const data = response.data[0];
-          console.log(data);
           me.indoor = {
             temperature_offset: data.temperature_offset,
             humidity_offset: data.humidity_offset,
