@@ -3,7 +3,7 @@
     <div class="weather" v-if="weather">
       <span>{{ weather.weather }}</span>
       <span><img :src="weather.icon_url"/></span>
-      <span> / {{ weather.temp }}℃</span>
+      <span> / {{ ceil(weather.temp) }}℃</span>
     </div>
   </div>
 </template>
@@ -141,6 +141,9 @@ export default {
           }
         }
       );
+    },
+    ceil: function(val) {
+      return (Math.ceil(val / 0.5) * 0.5).toFixed(1);
     },
     cancelRefresh: function() {
       clearInterval(this.timerId);

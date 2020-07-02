@@ -1,7 +1,7 @@
 <template>
   <div class="component">
     <div class="indoor" v-if="indoor">
-      <span>{{ indoor.temperature_val }}℃</span>
+      <span>{{ ceil(indoor.temperature_val) }}℃</span>
       <span> / {{ indoor.humidity_val }}%</span>
     </div>
   </div>
@@ -61,6 +61,9 @@ export default {
 
           console.log(me.indoor);
         });
+    },
+    ceil: function(val) {
+      return (Math.ceil(val / 0.5) * 0.5).toFixed(1);
     },
     cancelRefresh: function() {
       clearInterval(this.timerId);
