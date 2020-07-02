@@ -1,8 +1,7 @@
 <template>
   <div class="component">
     <div class="weather" v-if="weather">
-      <span>{{ weather.weather }}</span>
-      <span><img :src="weather.icon_url"/></span>
+      <span><font-awesome-icon :icon="icon"/></span>
       <span> / {{ ceil(weather.temp) }}℃</span>
     </div>
   </div>
@@ -10,6 +9,13 @@
 
 <script>
 import axios from "axios";
+import {
+  faSun,
+  faUmbrella,
+  faCloud,
+  faSnowflake,
+  faQuestion
+} from "@fortawesome/free-solid-svg-icons";
 
 export default {
   props: {
@@ -24,7 +30,8 @@ export default {
         latitude: null,
         longitude: null
       },
-      weather: null
+      weather: null,
+      icon: faQuestion
     };
   },
   created: function() {
@@ -84,11 +91,7 @@ export default {
             humidity: response.data.main.humidity,
             pressure: response.data.main.pressure,
             updated_at: response.data.dt,
-            weather: response.data.weather[0].description,
-            icon_url:
-              "http://openweathermap.org/img/wn/" +
-              response.data.weather[0].icon +
-              ".png",
+            weather: response.data.weather[0].id,
             weathers: []
           };
           response.data.weather.forEach(element => {
@@ -100,6 +103,8 @@ export default {
                 "http://openweathermap.org/img/wn/" + element.icon + ".png"
             });
           });
+
+          me.setFaWeatherIconById(me.weather.weather);
 
           console.log(me.weather);
         })
@@ -142,6 +147,34 @@ export default {
           }
         }
       );
+    },
+    setFaWeatherIconById: function(id) {
+      switch (parseInt(id / 100)) {
+        case 2: // thunderstorm
+          this.icon = faUmbrella;
+          break;
+        case 3: // drizzle
+          this.icon = faUmbrella;
+          break;
+        case 5: // rain
+          this.icon = faUmbrella;
+          break;
+        case 6: // snow
+          this.icon = faSnowflake;
+          break;
+        case 7: // atmosphere
+          this.icon = faUmbrella;
+          break;
+        case 8: // clear or cloud
+          if (id == 800) {
+            this.icon = faSun;
+          } else {
+            this.icon = faCloud;
+          }
+          break;
+        default:
+          this.icon = faQuestion;
+      }
     },
     ceil: function(val) {
       return (Math.ceil(val / 0.5) * 0.5).toFixed(1);

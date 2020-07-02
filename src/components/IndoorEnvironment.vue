@@ -1,8 +1,11 @@
 <template>
   <div class="component">
     <div class="indoor" v-if="indoor">
-      <span>{{ ceil(indoor.temperature_val) }}℃</span>
-      <span> / {{ indoor.humidity_val }}%</span>
+      <span><font-awesome-icon :icon="['fas', 'home']"/></span>
+      <span>
+        [ {{ ceil(indoor.temperature_val) }}℃ / {{ indoor.humidity_val }}%
+        ]</span
+      >
     </div>
   </div>
 </template>
