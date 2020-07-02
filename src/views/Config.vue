@@ -7,14 +7,15 @@
     <div v-else>
       <Config
         config-key="open_weather"
-        :config-value="openWeatherApiKey"
+        v-model="openWeatherApiKey"
         placeholder="Enter your Open Weather API key"
       />
       <Config
         config-key="nature_remo"
-        :config-value="natureRemoAccessToken"
+        v-model="natureRemoAccessToken"
         placeholder="Enter your Nature Remo access token"
       />
+      <button v-on:click="reset">Reset</button>
       <button v-on:click="showQR">Show QR</button>
     </div>
   </div>
@@ -74,6 +75,11 @@ export default {
     },
     closeQR: function() {
       this.isQRShown = false;
+    },
+    reset: function() {
+      this.openWeatherApiKey = "";
+      this.natureRemoAccessToken = "";
+      this.$store.commit("setConfig", {});
     },
     encrypt: function(value) {
       return CryptoJS.AES.encrypt(value, this.secret).toString();

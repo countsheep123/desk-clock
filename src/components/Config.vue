@@ -1,6 +1,6 @@
 <template>
   <div class="component">
-    <input v-model="val" :placeholder="placeholder" />
+    <input v-model="value" :placeholder="placeholder" />
     <button v-on:click="apply">Apply</button>
   </div>
 </template>
@@ -10,14 +10,17 @@ export default {
   props: {
     placeholder: String,
     configKey: String,
-    configValue: String
+    value: String
   },
-  data() {
-    return {
-      val: this.configValue
-    };
+  computed: {
+    val() {
+      return this.value;
+    }
   },
   methods: {
+    onChangeInput(event) {
+      this.$emit("input", event.target.value);
+    },
     apply: function() {
       var config = this.$store.state.config;
       config[this.configKey] = this.val;
