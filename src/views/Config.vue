@@ -41,19 +41,12 @@ export default {
     };
   },
   created: function() {
-    const config = this.$store.state.config;
+    var config = this.$store.getters.getConfig;
 
-    if (this.$route.query["open_weather"]) {
-      config["open_weather"] = this.decrypt(
-        decodeURIComponent(this.$route.query["open_weather"])
-      );
+    if (this.$route.query["config"]) {
+      config = this.decryptObj(decodeURIComponent(this.$route.query["config"]));
+      this.$store.commit("setConfig", config);
     }
-    if (this.$route.query["nature_remo"]) {
-      config["nature_remo"] = this.decrypt(
-        decodeURIComponent(this.$route.query["nature_remo"])
-      );
-    }
-    this.$store.commit("setConfig", config);
 
     this.openWeatherApiKey = config["open_weather"];
     this.natureRemoAccessToken = config["nature_remo"];
@@ -63,14 +56,12 @@ export default {
   methods: {
     showQR: function() {
       this.isQRShown = true;
-      const config = this.$store.state.config;
+      const config = this.$store.getters.getConfig;
       this.qrValue =
         this.getHostPort() +
         "/desk-clock/#/config" +
-        "?open_weather=" +
-        encodeURIComponent(this.encrypt(config["open_weather"])) +
-        "&nature_remo=" +
-        encodeURIComponent(this.encrypt(config["nature_remo"]));
+        "?config=" +
+        encodeURIComponent(this.encryptObj(config));
       console.log(this.qrValue);
     },
     closeQR: function() {
@@ -81,13 +72,12 @@ export default {
       this.natureRemoAccessToken = "";
       this.$store.commit("setConfig", {});
     },
-    encrypt: function(value) {
-      return CryptoJS.AES.encrypt(value, this.secret).toString();
+    encryptObj: function(obj) {
+      return CryptoJS.AES.encrypt(JSON.stringify(obj), this.secret).toString();
     },
-    decrypt: function(value) {
-      return CryptoJS.AES.decrypt(value, this.secret).toString(
-        CryptoJS.enc.Utf8
-      );
+    decryptObj: function(str) {
+      var bytes = CryptoJS.AES.decrypt(str, this.secret);
+      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     },
     getHostPort: function() {
       const url = window.location.href;

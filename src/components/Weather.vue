@@ -35,7 +35,7 @@ export default {
     };
   },
   created: function() {
-    this.apikey = this.$store.state.config["open_weather"];
+    this.apikey = this.$store.getters.getConfig["open_weather"];
     this.getCurrentPosition();
     this.timerId = setInterval(this.fetch, this.refreshInterval);
   },

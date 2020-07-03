@@ -23,7 +23,7 @@ export default {
     };
   },
   created: function() {
-    this.accesstoken = this.$store.state.config["nature_remo"];
+    this.accesstoken = this.$store.getters.getConfig["nature_remo"];
     this.fetch();
     this.timerId = setInterval(this.fetch, this.refreshInterval);
   },
